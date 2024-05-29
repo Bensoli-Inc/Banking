@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   description: "Nobiles Bank: Secure and innovative financial services.",
   icons: {
     icon: '/icons/logo.svg'
-  }
+  } 
 };
 
 export default function RootLayout({
