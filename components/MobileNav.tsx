@@ -35,7 +35,7 @@ const MobileNav = ({ user}: MobileNavProps) => {
             <Image src="/icons/logo.svg" 
             width={34} 
             height={34}
-            alt="bensoliLogo" 
+            alt="Horizon Logo" 
            
             />
             <h1 className='text-26 font-ibm-flex-serif font-bold text-black-1'>
