@@ -25,13 +25,17 @@ import { authFormSchema } from '@/lib/utils'
 
 import { Loader2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { getLoggedInUser, signIn } from '@/lib/actions/user.actions'
+import { signUp } from '@/lib/actions/user.actions'
+
 
 const AuthForm = ({type}: {type: string}) => {
   const router = useRouter();
-       const [user, setUser] = useState(null);
-       const [isLoading, setIsLoading] = useState(false);
+  const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-       const formSchema = authFormSchema(type);
+
+  const formSchema = authFormSchema(type);
 
          // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
@@ -44,20 +48,35 @@ const AuthForm = ({type}: {type: string}) => {
  
   // 2. Define a submit handler.
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
-    setIsLoading(true)
+    setIsLoading(true);
     
     try {
       //sign up with Appwrite && create a plaid link token
+
       if (type === 'sign-up') {
-       // const newUser = await signUp(data);
-       // setUser(newUser);
+        const userData = {
+          firstName: data.firstName!,
+          lastName: data.lastName!,
+          address1: data.address1!,
+          city: data.city!,
+          state: data.state!,
+          postalCode: data.postalCode!,
+          dateOfBirth: data.dateOfBirth!,
+          ssn: data.ssn!,
+          email: data.email,
+          password: data.password
+        }
+
+        const newUser = await signUp(userData);
+        setUser(newUser);
       }
       if (type === 'sign-in') {
-      //  const response = await signIn({
-       //   email: data.email,
-       //   passwo//rd: data.password,
-       // })
-       // if(response) router.push('/')
+        const response = await signIn({
+          email: data.email,
+          password: data.password,
+        })
+
+        if(response) router.push('/')
       }
     } catch (error) {
       console.log(error)
@@ -82,11 +101,11 @@ const AuthForm = ({type}: {type: string}) => {
         </Link>
         <div className='flex flex-col gap-1 md:gap-3'>
             <h1 className='text-24 lg:text-36 font-semibold text-gray-900'>
-                {user
-                ?'Link Account'
-                : type === 'sign-in'
-                ? 'sign In'
-                :'Sign Up'
+                {user 
+                 ? 'Link Account'
+                  : type === 'sign-in'
+                  ? 'Sign In'
+                  :'Sign Up'
             }
 
             <p className='text-16 font-normal text-gray-600'>
