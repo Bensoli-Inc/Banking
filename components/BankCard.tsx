@@ -9,10 +9,10 @@ const BankCard = ({account, userName, showBalance = true}: CreditCardProps) => {
         <div className='bank-card_content'>
             <div>
                 <h1 className='text-16 font-semibold text-white'>
-                    {account.name || userName}
+                    {account.name || userName} 
                 </h1>
                 <p className='font-ibm-plex-serif font-black'>
-                    {formatAmount(account.currentBalance)}
+                   mzee {formatAmount(account.currentBalance)}
                 </p>
             </div>
             <article className='flex flex-col gap-2'>
